@@ -251,8 +251,8 @@ class Normalise:
         lentext = len(text)
         while i < lentext:
             if text[i] in self.extra.keys():
-                text = text[:i] + self.extra[text[i]] + text[i+1]
                 i += len(self.extra[text[i]])-1
+                text = text[:i] + self.extra[text[i]] + text[i+1]
             lentext = len(text)
             i += 1
         return text
@@ -331,8 +331,8 @@ class Normalise:
         lentext = len(text)
         while i < lentext:
             if ord(text[i]) in self.known_normalisations.keys():
-                text = text[:i] + self.known_normalisations[ord(text[i])] + text[i+1:]
                 i += len(self.known_normalisations[ord(text[i])]) - 1
+                text = text[:i] + self.known_normalisations[ord(text[i])] + text[i+1:]
                 lentext = len(text)
             elif ord(text[i]) in self.known_removal:
                 to_remove.append(i)
