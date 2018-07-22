@@ -57,7 +57,7 @@ class Normalise:
                 f = ImageFont.truetype(font_path, i)
                 w,h = f.getsize(" ")
                 if w == self.width:
-                    size == i
+                    size = i
                 i += 1
         except Exception as e:
             raise Exception("Font does not support space character (font path: %s)." % font_path)
