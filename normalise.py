@@ -13,9 +13,9 @@ class Normalise:
         Don't include any Emoji only fonts as these will never be used
         Right now, only TrueType fonts are supported
         """
+        assert(type(px_width) == int), "Width must be an integer."
         assert (px_width > 4), "Width cannot be less than 5px."
         assert (px_width <= 100), "Width cannot be greater than 100px."
-        assert(type(px_width) == int), "Width must be an integer."
         self.width, self.height = px_width, 0 #in pixels
         allowed_font_types = (".ttf")
         if font_dir.endswith("/"):
@@ -104,11 +104,11 @@ class Normalise:
         self.whitespace_extra = set([6158, 8203, 8204, 8205, 8288, 65279])
 
         #control characters (plus specials, seperators...)
-        self.allowed_control_chars = {}
+        self.allowed_control_chars = {65533: '?'}
         self.control_chars = self.build_control_chars() #set
 
         #make arrays of images of allowed chars
-        self.char_arrays = {65533: '?'}
+        self.char_arrays = {}
         self.gen_arrays()
         print("Generated template arrays.")
 
@@ -225,7 +225,7 @@ class Normalise:
         lentext = len(text)
         while i < lentext:
             ss = text[i] #substring
-            if ss in self.combining_chars:
+            if ord(ss) in self.combining_chars:
                 text = text[:i] + text[i+1:]
             else:
                 nfkd_list = list(unicodedata.normalize("NFKD",ss)) #compatibility
@@ -238,7 +238,7 @@ class Normalise:
                                 nfd.remove(nfd_char)
                     ss_list += nfd
                 for s in ss_list:
-                    if s in self.combining_chars:
+                    if ord(s) in self.combining_chars:
                         ss_list.remove(s)
                 new_ss = "".join(ss_list)
                 text = text[:i] + new_ss + text[i+1:]
@@ -259,18 +259,19 @@ class Normalise:
 
     def normalise_LINE_emojis(self, text, replacement=" "):
         #turn LINE emojis into normal characters, or replace with replacement string
-        assert (len(replacement) != 0), "Replacement cannot be empty."
+        if len(replacement) == 0:
+            replacement = chr(8203) #zero width space character
         i = 0
         lentext = len(text)
         while i < lentext:
-            if ord(text[i]) > 1000000: #private use unicode points
+            if ord(text[i]) > 983040: #private use unicode points
                 e = text.find(chr(1114111), i)
-                if e == -1:
+                if e in [-1, i]:
                     text = text[:i] + text[i+1:]
                 else:
                     start, mid, end = text[:i], text[i:e+1], text[e+1:]
-                    emoji_ids = [m for m in mid if ord(m) > 1000000]
-                    mid = [m for m in mid if ord(m) < 1000000]
+                    emoji_ids = [m for m in mid if ord(m) >= 983040]
+                    mid = [m for m in mid if ord(m) < 983040]
                     mid = "".join(mid)
                     if mid == "..":
                         mid = "..."
@@ -296,7 +297,6 @@ class Normalise:
         return text
 
     def normalise_emojis(self, text, replacement=" ", remove=True):
-        assert (len(replacement) != 0), "Replacement cannot be empty."
         i = 0
         lentext = len(text)
         while i < lentext:
@@ -327,11 +327,16 @@ class Normalise:
 
     def normalise_known(self, text):
         to_remove = []
-        for i in range(len(text)):
+        i = 0
+        lentext = len(text)
+        while i < lentext:
             if ord(text[i]) in self.known_normalisations.keys():
                 text = text[:i] + self.known_normalisations[ord(text[i])] + text[i+1:]
+                i += len(self.known_normalisations[ord(text[i])]) - 1
+                lentext = len(text)
             elif ord(text[i]) in self.known_removal:
                 to_remove.append(i)
+            i += 1
         to_remove.reverse()
         for tr in to_remove:
             text = text[:i] + text[i+1:]
@@ -358,6 +363,7 @@ class Normalise:
             if text[i] not in self.allowed_chars:
                 unknown_chars[ord(text[i])] = i
         if unknown_chars != {}:
+            #could not draw whole text string, but not sure if i wanna split it in weird spots
             text_image = self.draw_string(text)
             unknown_char_arrays = {}
             for uc_ord in unknown_chars.keys():
