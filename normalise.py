@@ -355,7 +355,7 @@ class Normalise:
         #normalises using imaging methods
         unknown_chars = {} # uc[ord] = index
         for i in range(len(text)):
-            if ord(text[i]) not in self.allowed_chars:
+            if text[i] not in self.allowed_chars:
                 unknown_chars[ord(text[i])] = i
         if unknown_chars != {}:
             text_image = self.draw_string(text)
