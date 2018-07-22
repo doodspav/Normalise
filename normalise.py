@@ -3,7 +3,7 @@ from PIL import Image, ImageFont, ImageDraw
 from fontTools.ttLib import TTFont
 from word2number import w2n
 import numpy as np
-import os
+import os, unicodedata
 
 class Normalise:
 
