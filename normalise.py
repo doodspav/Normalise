@@ -115,7 +115,7 @@ class Normalise:
     def build_control_chars(self, keep_whitespace=True, keep_whitespace_extra=True):
         control_0 = list(range(32)) #not including 32 (space)
         control_1 = list(range(127, 160))
-        language_tags = list(rane(917505, 917631))
+        language_tags = list(range(917505, 917631))
         bidirectional_text = [1564, 8206, 8207, 8234, 8235, 8236, 8237, 8238, 8294, 8295, 8296, 8297]
         specials = list(range(65520, 65536)) #includes interlinear notation
         total = control_0+control_1+language_tags+bidirectional_text+specials
@@ -137,8 +137,7 @@ class Normalise:
 
     def gen_arrays(self):
         #draw chars and conver to numpy arrays
-        for i in range(len(self.allowed_chars)):
-            char = self.allowed_chars[i]
+        for char in self.allowed_chars:
             img = self.draw_string(char)
             arr = np.array(img)
             self.char_arrays[char] = arr
