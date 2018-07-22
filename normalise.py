@@ -20,7 +20,7 @@ class Normalise:
         allowed_font_types = (".ttf")
         if font_dir.endswith("/"):
             font_dir = font_dir[:-1]
-        fonts = os.listdir(font_dirt)
+        fonts = os.listdir(font_dir)
         self.font_names = [f for f in fonts if f.endswith(allowed_font_types)]
         self.font_objects = {}
         self.font_points = {}
