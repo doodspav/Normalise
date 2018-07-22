@@ -322,7 +322,7 @@ class Normalise:
         for tr in to_remove:
             text = text[:i] + text[i+1]
         for w in self.whitespace:
-            text = text.replace(w, " ")
+            text = text.replace(chr(w), " ")
         return text
 
     def normalise_known(self, text):
