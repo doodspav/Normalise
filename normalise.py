@@ -174,7 +174,7 @@ class Normalise:
         str_draw = ImageDraw.Draw(str_blank)
         #draw on canvas
         for tu in to_use:
-            draw.text((0,0), tu[1], 0, font=self.font_objects[tu[0]])
+            str_draw.text((0,0), tu[1], 0, font=self.font_objects[tu[0]])
         return str_blank
 
     def sort_key(self, ord_set):
