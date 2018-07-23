@@ -10,6 +10,7 @@ class Normalise:
     def __init__(self, font_dir=None, px_width=40):
         """
         ALL FONTS MUST BE MONOSPACE FONTS AND MUST SUPPORT U+0020 (space)
+        Sans Serif fonts work a LOT better
         Don't include any Emoji only fonts as these will never be used
         Right now, only TrueType fonts are supported
         """
