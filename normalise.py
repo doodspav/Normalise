@@ -382,4 +382,5 @@ class Normalise:
                     unknown_char_arrays[uc_ord] = char
             self.update_known(unknown_char_arrays, set(known_removal))
             text = self.normalise_known(text)
+            text = self.normalise_extra(text)
         return text
