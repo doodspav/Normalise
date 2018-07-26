@@ -43,7 +43,7 @@ class Normalise:
                 self.height = h
         print("Loaded %s font files." % len(self.font_names))
         total_font_points = set(itertools.chain.from_iterable(self.font_points.values()))
-        print("%s unique unicode character points supported." % total_font_points)
+        print("%s unique unicode character points supported." % len(total_font_points))
 
         #db stuff
         self.known_normalisations = {} #IMPORTANT k:v --> ord:str NOT ord:ord (but it IS stored in db as ord:ord)
