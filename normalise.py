@@ -41,7 +41,7 @@ class Normalise:
                 raise Exception("Width of chr(32) (%s) != self.width (%s)." % (w, self.width))
             if h > self.height:
                 self.height = h
-        print("Loaded %s font files." % len(self.font_names))
+        print("Loaded %s font file(s)." % len(self.font_names))
         total_font_points = set(itertools.chain.from_iterable(self.font_points.values()))
         print("%s unique unicode character points supported." % len(total_font_points))
 
@@ -73,7 +73,7 @@ class Normalise:
                 i += 1
         except Exception as e:
             raise Exception("Font does not support space character (font path: %s)." % font_path)
-        print("Font %s contributed %s characters" % (font_path, len(uni_decimals)))
+        print("%s contributed %s characters" % (font_path, len(uni_decimals)))
         return uni_decimals, size
 
     def load_db(self):
