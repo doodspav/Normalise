@@ -324,6 +324,8 @@ class Normalise:
                         text = start + replacement + end
                         i += len(replacement)
                 lentext = len(text)
+            else:
+                i += 1
         if self.debug:
             print("LINE emojis: %s" % text)
         return text
