@@ -21,7 +21,7 @@ class Normalise:
         assert (px_width > 4), "Width cannot be less than 5px."
         assert (px_width <= 100), "Width cannot be greater than 100px."
         assert (type(debug) == bool), "Debug must be True or False."
-        assert (comaprison in ['MSE','NRMSE','PSNR','SSIM']), "Comparison must be one of these 4 methods: MSE, NRMSE, PSNR, SSIM."
+        assert (comparison in ['MSE','NRMSE','PSNR','SSIM']), "Comparison must be one of these 4 methods: MSE, NRMSE, PSNR, SSIM."
         
         #comparison methods
         comparisons = {'MSE': compare_mse,
