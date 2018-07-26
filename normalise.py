@@ -423,4 +423,5 @@ class Normalise:
         #get rid of multiple spaces
         texts = text.split()
         text = " ".join(texts)
+        text = text.lower()
         return text
