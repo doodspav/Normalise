@@ -58,9 +58,7 @@ class Normalise:
         #check to make sure it's a unicode font
         cmap_tables = [cmap.cmap for cmap in f['cmap'].tables if cmap.isUnicode()]
         assert (len(cmap_tables) != 0), "%s is not a unicode font and cannot be used here." % font_path
-        combined_cmap = {}
-        for ct in cmap_tables:
-            combined_cmap.update(ct)
+        combined_cmap = {k:v for ct in cmap_tables for k,v in ct.items()}
         uni_decimals = list(combined_cmap.keys())
         #could use (font.getBestCmap().keys()) instead?
         #slow method for size - i'll figure out fast method later
@@ -154,6 +152,12 @@ class Normalise:
             str_draw.text((0,0), tu[1], 0, font=self.font_objects[tu[0]])
         #debug
         if self.debug:
+            w,h = str_blank.size
+            x_coords = [0]
+            while x_coords[-1]+self.width < w:
+                x_coords.append(x_coords[-1]+self.width)
+            for x in x_coords:
+                str_draw.line([(x,0), (x,h)])
             filename = str(uuid.uuid4())+".png"
             str_blank.save(filename, format="PNG")
             print("Text image saved as: %s" % filename)
