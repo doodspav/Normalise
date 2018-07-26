@@ -1,4 +1,5 @@
-from skimage.measure import compare_mse, compare_nrmse, compare_psnr, compare_ssim
+from skimage.measure import compare_mse, compare_nrmse, compare_ssim, compare_psnr
+# MSE and NRMSE are tied for joint first, and the other two are tied for joint last in how well they work (imo)
 from PIL import Image, ImageFont, ImageDraw
 from fontTools.ttLib import TTFont
 from word2number import w2n
