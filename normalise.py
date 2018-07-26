@@ -1,4 +1,4 @@
-from skimage.measure import compare_mse as MSE #can also have ssim, nrmse, and psnr
+from skimage.measure import compare_mse, compare_nrmse, compare_psnr, compare_ssim
 from PIL import Image, ImageFont, ImageDraw
 from fontTools.ttLib import TTFont
 from word2number import w2n
@@ -7,7 +7,7 @@ import os, unicodedata, itertools, uuid
 
 class Normalise:
 
-    def __init__(self, font_dir=None, px_width=40, debug=False):
+    def __init__(self, font_dir=None, px_width=40, debug=False, comparison="MSE"):
         """
         ALL FONTS MUST BE MONOSPACE UNICODE FONTS AND MUST SUPPORT U+0020 (space)
         I don't check to make sure fonts monospace
@@ -20,7 +20,16 @@ class Normalise:
         assert (px_width > 4), "Width cannot be less than 5px."
         assert (px_width <= 100), "Width cannot be greater than 100px."
         assert (type(debug) == bool), "Debug must be True or False."
+        assert (comaprison in ['MSE','NRMSE','PSNR','SSIM']), "Comparison must be one of these 4 methods: MSE, NRMSE, PSNR, SSIM."
+        
+        #comparison methods
+        comparisons = {'MSE': compare_mse,
+                       'NRMSE': compare_nrmse,
+                       'PSNR': compare_psnr,
+                       'SSIM': compare_ssim}
+        self.comparison = comparisons[comparison]
 
+        #font loading
         self.debug = debug
         self.width, self.height = px_width, 0 #in pixels
         allowed_font_types = (".ttf")
@@ -176,7 +185,7 @@ class Normalise:
         results = []
         for c in self.char_arrays.keys():
             c_arr = self.char_arrays[c]
-            s = MSE(array, c_arr)
+            s = self.comparison(array, c_arr)
             results.append((c, s))
         results.sort(key=lambda x: x[1])
         return results[0][0]
