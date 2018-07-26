@@ -1,4 +1,4 @@
-from skimage.measure import compare_ssim as SSIM #can also have mse, nrmse, and psnr
+from skimage.measure import compare_mse as MSE #can also have ssim, nrmse, and psnr
 from PIL import Image, ImageFont, ImageDraw
 from fontTools.ttLib import TTFont
 from word2number import w2n
@@ -175,7 +175,7 @@ class Normalise:
         results = []
         for c in self.char_arrays.keys():
             c_arr = self.char_arrays[c]
-            s = SSIM(array, c_arr)
+            s = MSE(array, c_arr)
             results.append((c, s))
         results.sort(key=lambda x: x[1])
         return results[0][0]
