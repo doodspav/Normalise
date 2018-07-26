@@ -3,7 +3,7 @@ from PIL import Image, ImageFont, ImageDraw
 from fontTools.ttLib import TTFont
 from word2number import w2n
 import numpy as np
-import os, unicodedata, itertools
+import os, unicodedata, itertools, uuid
 
 class Normalise:
 
@@ -152,6 +152,11 @@ class Normalise:
         #draw on canvas
         for tu in to_use:
             str_draw.text((0,0), tu[1], 0, font=self.font_objects[tu[0]])
+        #debug
+        if self.debug:
+            filename = str(uuid.uuid4())+".png"
+            str_blank.save(filename, format="PNG")
+            print("Text image saved as: %s" % filename)
         return str_blank
 
     def sort_key(self, ord_set):
