@@ -41,6 +41,7 @@ class Normalise:
                 raise Exception("Width of chr(32) (%s) != self.width (%s)." % (w, self.width))
             if h > self.height:
                 self.height = h
+        self.height = int(self.height*1.5)
         print("Loaded %s font file(s)." % len(self.font_names))
         total_font_points = set(itertools.chain.from_iterable(self.font_points.values()))
         print("%s unique unicode character points supported." % len(total_font_points))
