@@ -157,7 +157,7 @@ class Normalise:
             while x_coords[-1]+self.width < w:
                 x_coords.append(x_coords[-1]+self.width)
             for x in x_coords:
-                str_draw.line([(x,0), (x,h)])
+                str_draw.line([(x,0), (x,h)], fill=0, width=1)
             filename = str(uuid.uuid4())+".png"
             str_blank.save(filename, format="PNG")
             print("Text image saved as: %s" % filename)
