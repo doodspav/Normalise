@@ -49,7 +49,6 @@ class Normalise:
             unicode_dict, size, font_obj = self.get_ttf_info(path, fn)
             self.font_objects[fn] = font_obj
             self.font_points[fn] = unicode_dict
-            total_font_points += 
         self.height = int(self.height*1.5)
         print("Loaded %s font file(s)." % len(self.font_names))
         total_font_points = set(itertools.chain.from_iterable([v.keys() for v in self.font_points.values()]))
@@ -93,7 +92,7 @@ class Normalise:
                 self.height = h
             uni_dict[ud] = w
         print("Font %s contributed %s characters" % (font_name, len(uni_decimals)))
-        return uni_dict, size, font_object
+        return uni_dict, size, f
 
     def load_db(self):
         #do something later
