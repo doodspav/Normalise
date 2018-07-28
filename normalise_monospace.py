@@ -25,6 +25,8 @@ class Normalise:
         assert (type(debug) == bool), "Debug must be True or False."
         assert (comparison in ['MSE','NRMSE','PSNR','SSIM']), "Comparison must be one of these 4 methods: MSE, NRMSE, PSNR, SSIM."
         
+        self.is_startup = True
+        
         #comparison methods
         comparisons = {'MSE': compare_mse,
                        'NRMSE': compare_nrmse,
@@ -65,6 +67,7 @@ class Normalise:
         
         #character ranges and ints from json
         self.generate_char_info()
+        self.is_startup = False
 
     def get_ttf_info(self, font_path):
         f = TTFont(font_path)
@@ -164,7 +167,7 @@ class Normalise:
         for tu in to_use:
             str_draw.text((0,0), tu[1], 0, font=self.font_objects[tu[0]])
         #debug
-        if self.debug:
+        if self.debug and not self.is_startup:
             w,h = str_blank.size
             x_coords = [0]
             while x_coords[-1]+self.width < w:
