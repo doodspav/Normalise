@@ -10,11 +10,13 @@ class Normalise:
 
     def __init__(self, font_dir=None, px_width=40, debug=False, comparison="MSE"):
         """
-        ALL FONTS MUST BE MONOSPACE UNICODE FONTS AND MUST SUPPORT U+0020 (space)
-        I don't check to make sure fonts monospace
-        Sans Serif fonts work a LOT better
-        Don't include any Emoji only fonts as these will never be used
-        Right now, only TrueType fonts are supported
+        ALL FONTS MUST BE MONOSPACE UNICODE FONTS AND SUPPORT 0x20 (space) - THIS IS CHECKED (being unicode, not monospace)
+        [0] Only the space character (0x20) is checked to be the px_width when determining font size
+        [1] Sans serif fonts work a lot better
+        [2] In general, it is advise to use similar looking and sized fonts
+        [3] Don't include any emoji fonts as these won't be used (since emoji characters get removed)
+        [4] Right now only TrueType fonts are supported
+        [5] Coloured fonts such as NotoColorEmoji don't work and raise an error
         """
         assert (type(font_dir) == str), "font_dir must be a path string."
         assert (type(px_width) == int), "Width must be an integer."
