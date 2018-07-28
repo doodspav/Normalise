@@ -184,7 +184,7 @@ class Normalise:
         #debug
         if self.debug and not self.is_startup:
             for mw in max_widths:
-                str_draw.line([(mw[1],0), (sum(mw),self.height)], fill=0, width=1)
+                str_draw.line([(mw[1],0), (mw[1],self.height)], fill=0, width=1)
             filename = str(uuid.uuid4().hex)+".png"
             str_blank.save(filename, format="PNG")
             print("Text image saved as: %s" % filename)
