@@ -49,7 +49,6 @@ class Normalise:
             unicode_dict, size, font_obj = self.get_ttf_info(path, fn)
             self.font_objects[fn] = font_obj
             self.font_points[fn] = unicode_dict
-        self.height = int(self.height*1.5)
         print("Loaded %s font file(s)." % len(self.font_names))
         total_font_points = set(itertools.chain.from_iterable([v.keys() for v in self.font_points.values()]))
         print("Total %s unique unicode character points supported." % len(total_font_points))
