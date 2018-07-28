@@ -131,7 +131,7 @@ class Normalise:
     def gen_arrays(self):
         #draw chars and conver to numpy arrays
         for char in self.allowed_chars:
-            img = self.draw_string(char)
+            img, widths = self.draw_string(char)
             arr = np.array(img)
             self.char_arrays[char] = arr
 
