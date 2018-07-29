@@ -178,9 +178,8 @@ class Normalise:
         for i in range(len(to_use)):
             if 8204 in self.font_points[to_use[i][0]]:
                 old_string = to_use[i][1]
-                new_string = ""
-                for s in old_string:
-                    new_string += s+chr(8204)
+                new_string_list = [s+chr(8204) if s != " " else s for s in old_string]
+                new_string = "".join(new_string_list)
                 new_string = new_string[:-1]
                 to_use[i][1] = new_string
         #get canvas
