@@ -173,6 +173,16 @@ class Normalise:
                 widths += extra
             max_widths = [max(widths[i], max_widths[i]) for i in range(len(max_widths))]
         max_widths = [(max_widths[i], sum(max_widths[:i])) for i in range(len(max_widths))]
+        #add zero-wdith non-joiner to strings whose fonts support it
+        #this is so that every character is in its isolated form
+        for i in range(len(to_use)):
+            if 8204 in self.font_points[to_use[i][0]]:
+                old_string = to_use[i][1]
+                new_string = ""
+                for s in old_string:
+                    new_string += s+chr(8204)
+                new_string = new_string[:-1]
+                to_use[i][1] = new_string
         #get canvas
         str_width = max_widths[-1][0] + max_widths[-1][1]
         str_blank = Image.new("L", (str_width, self.height), color=255)
