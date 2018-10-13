@@ -145,11 +145,11 @@ class Normalise:
         fonts = [(f, self.font_points[f]) for f in self.font_names]
         #split characters in strings between fonts
         while len(ords_set) != 0:
-            fonts.sort(key=self.sort_key(ords_set))
+            fonts.sort(key=self.sort_key(ords_set), reverse=True)
             font = fonts[0]
             shared_chars = ords_set.intersection(font[1])
             if len(shared_chars) == 0:
-                fonts.sort(key=self.sort_key(set([unknown_char])))
+                fonts.sort(key=self.sort_key(set([unknown_char])), reverse=True)
                 font = fonts[0]
                 shared_chars = ords_set.intersection(font[1])
                 if len(shared_chars) == 0 or (len(unknown_char.split()) == 0 and len(unknown_char) != 0): #eg whitespace
