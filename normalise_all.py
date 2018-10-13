@@ -158,12 +158,12 @@ class Normalise:
                 else:
                     ords_set.clear()
                     temp_str = "".join([unknown_char if ord(s) in shared_chars else " " for s in string])
-                    to_use.append((font[0], temp_str))
+                    to_use.append([font[0], temp_str])
             else:
                 shared_chars = ords_set.intersection(font[1])
                 ords_set -= shared_chars
                 temp_str = "".join([s if ord(s) in shared_chars else " " for s in string])
-                to_use.append((font[0], temp_str))
+                to_use.append([font[0], temp_str])
         #get total width of string
         max_widths = [self.width] * len(string)
         for tu in to_use:
